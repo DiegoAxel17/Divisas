@@ -12,8 +12,8 @@ services:
         fromDatabase:
           name: fx-db
           property: connectionString
-      - key: ALPHA_VANTAGE_API_KEY
-        sync: YJF1OJI4840OQJJ7
+      - key: YJF1OJI4840OQJJ7
+        sync: false
 
 databases:
   - name: fx-db
