@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Divisas y Noticias</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+    
+    <!-- Incluir Chart.js desde el CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Columna de Divisas -->
+            <div class="col-md-6 divisas-section" id="divisas-section">
+                <h3>Divisas</h3>
+                    <div class="row mb-2">
+                    <div class="col-md-5 d-flex gap-2 align-items-end">
+                        <div class="form-group me-2">
+                        <label for="start-date" class="form-label">Desde</label>
+                        <input type="datetime-local" id="start-date" class="form-control">
+                        </div>
+                        <div class="form-group me-2">
+                        <label for="end-date" class="form-label">Hasta</label>
+                        <input type="datetime-local" id="end-date" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-7 d-flex align-items-end justify-content-end gap-2">
+                        <button class="btn btn-primary me-2" id="apply-filter">Filtrar</button>
+                        <button class="btn btn-outline-secondary me-2" id="clear-filter">Quitar filtro</button>
+                        <button class="btn btn-outline-danger" id="delete-range">Borrar historial (rango)</button>
+                    </div>
+                    </div>
+
+                    <div class="chart-container">
+                    <canvas id="divisas-chart"></canvas>
+                    </div>
+
+                    <div class="btn-group mt-2" role="group">
+                    <button class="btn btn-secondary" id="divisas-prev">Anterior</button>
+                    <button class="btn btn-secondary" id="divisas-next">Siguiente</button>
+                    </div>
+
+            </div>
+
+            <!-- Columna de Noticias -->
+            <div class="col-md-6 noticias-section" id="noticias-section">
+                <h3>Noticias</h3>
+                <div id="noticias-content" class="d-flex justify-content-center align-items-center" style="height: 100%;">
+                <!-- Aquí se inyectarán las noticias -->
+                </div>
+                    <div class="btn-group w-100" id="noticias-controls">
+                        <button class="btn btn-danger w-50" id="noticias-prev">Anterior Noticia</button>
+                        <button class="btn btn-success w-50" id="noticias-next">Siguiente Noticia</button>
+                    </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery, Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+    <!-- Incluir script.js al final para que cargue después de Chart.js -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,55 @@
+/* Estilos para el gráfico y la interfaz de divisas y noticias */
+body {
+    background-color: #f4f4f4;
+}
+
+h3 {
+    text-align: center;
+    margin-top: 20px;
+}
+
+#divisas-chart {
+    height: 500px; /* Asegúrate de que la altura sea suficiente */
+    width: 100%;
+    border: 1px solid red; /* Borde para depuración */
+}
+
+#divisas-btn, #noticias-btn {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+}
+
+/* Estilo para las dos secciones */
+.divisas-section, .noticias-section {
+    height: 100vh; /* Cada sección ocupa la mitad de la pantalla */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: #ffffff;
+}
+
+.noticias-section {
+    background-color: #f8f9fa;
+}
+
+button {
+    width: 100%;
+}
+#divisas-controls, #noticias-controls {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+}
+
+
+
+
+
+
+
