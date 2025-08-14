@@ -98,14 +98,14 @@ function resetChart(pair) {
 
 async function loadPairWithHistory(pair) {
   resetChart(pair);
-  // 1) Carga historial guardado (vacío por ahora si no hay DB)
+  // 1) Carga historial guardado
   const hist = await fetchHistory(pair);
   hist.forEach(item => {
     divisasChart.data.labels.push(fmtLocal(item.ts_utc));
     divisasChart.data.datasets[0].data.push(item.rate);
   });
   divisasChart.update();
-  // 2) Hace una nueva lectura (dummy si no hay API key)
+  // 2) Hace una nueva lectura (se guarda en servidor)
   const latest = await fetchAndPersistRate(pair);
   if (latest) {
     divisasChart.data.labels.push(fmtLocal(latest.ts_utc));
@@ -134,7 +134,7 @@ document.getElementById('divisas-prev').addEventListener('click', async () => {
   await switchCurrency(i);
 });
 
-// Actualización cada minuto: usa la API del backend (que también guarda cuando haya DB)
+// Actualización cada minuto: usa la API del backend (que también guarda)
 setInterval(async () => {
   const pair = currencies[currentCurrencyIndex];
   const latest = await fetchAndPersistRate(pair);
@@ -196,14 +196,16 @@ document.getElementById('apply-filter').addEventListener('click', applyFilter);
 document.getElementById('clear-filter').addEventListener('click', clearFilter);
 document.getElementById('delete-range').addEventListener('click', deleteRange);
 
-// -------- Noticias (desde el backend, sin CORS) --------
+// -------- Noticias --------
+const newsApiKey  = '3fceba5ce12844f0ab839aea7b08ebc1';
+const newsUrl = `https://newsapi.org/v2/everything?language=es&q=noticias&apiKey=${newsApiKey}`;
 const newsContainer = document.getElementById('noticias-content');
 let articles = [];
 let newsIndex = 0;
 
 async function updateNews() {
   try {
-    const res  = await fetch('/api/news');
+    const res  = await fetch(newsUrl);
     const json = await res.json();
     if (json.status !== 'ok' || !Array.isArray(json.articles) || json.articles.length === 0) {
       newsContainer.innerHTML = '<p>No hay noticias disponibles.</p>';
@@ -227,7 +229,7 @@ function showArticle() {
     <div class="card mb-3" style="max-width: 100%;">
       ${art.urlToImage ? `<img src="${art.urlToImage}" class="card-img-top" alt="">` : ''}
       <div class="card-body">
-        <h5 class="card-title">${art.title || ''}</h5>
+        <h5 class="card-title">${art.title}</h5>
         <p class="card-text">${art.description || ''}</p>
       </div>
     </div>
@@ -235,12 +237,10 @@ function showArticle() {
 }
 
 document.getElementById('noticias-next').addEventListener('click', () => {
-  if (!articles.length) return;
   newsIndex = (newsIndex + 1) % articles.length;
   showArticle();
 });
 document.getElementById('noticias-prev').addEventListener('click', () => {
-  if (!articles.length) return;
   newsIndex = (newsIndex - 1 + articles.length) % articles.length;
   showArticle();
 });
@@ -250,6 +250,5 @@ document.getElementById('noticias-prev').addEventListener('click', () => {
   await loadPairWithHistory('EUR/USD');
   updateNews();
 })();
-
 
 
